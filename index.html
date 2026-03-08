@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff" id="meta-theme-color">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+    
+    <title>Board Tapasya |Board Learning Hub</title>
+    <meta name="description" content="Board Tapasya is the ultimate free learning app for Class 10 students across CBSE, ICSE, and all State Boards. Access premium animated video lectures, chapter-wise PDF study notes, and quick revision mind maps.">
+    <meta name="keywords" content="Board Tapasya, CBSE, ICSE, State Boards, Class 10 notes, free video lectures, Science notes, Maths revision, mind maps, board exams 2024, educational app">
+    <meta name="author" content="Board Tapasya">
+    <meta name="robots" content="index, follow"> 
+    <link rel="canonical" href="https://boardtapasya.netlify.com/"> 
+
+    <meta property="og:title" content="Board Tapasya | Master Your Board Exams">
+    <meta property="og:description" content="Free animated video lectures, hand-written PDF notes, and mind maps for Class 10 students across all boards. Start learning now!">
+    <meta property="og:image" content="https://i.ibb.co/h1xzLTK5/Chat-GPT-Image-Mar-8-2026-02-46-47-PM.png"> 
+    <meta property="og:url" content="https://boardtapasya.netlify.com/">
+    <meta property="og:type" content="website">
+
+    <meta name="theme-color" content="#ffffff" id="meta-theme-color">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.json">
+    
+ 
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --nav-height: 80px;
+        }
+
+        /* --- DARK THEME VARIABLES --- */
+        body.dark-theme {
+            --bg: #0f172a; 
+            --card-bg: #1e293b; 
+            --text-main: #f8fafc; 
+            --text-muted: #94a3b8; 
+            --border-color: #334155;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg); color: var(--text-main); line-height: 1.6;
+            overflow-x: hidden; overscroll-behavior-y: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        a, button, .mobile-toggle { user-select: none; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; border: none; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4); }
+        .btn-outline { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* --- ROUTING LOGIC --- */
+        .page { display: none; animation: fadeIn 0.4s ease-out; min-height: calc(100vh - 300px); padding-top: var(--nav-height); }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- NAVIGATION --- */
+        header { background: var(--nav-bg); backdrop-filter: blur(12px); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); transition: 0.3s; }
+        nav { display: flex; justify-content: space-between; align-items: center; height: var(--nav-height); }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { font-weight: 500; color: var(--text-muted); font-size: 0.95rem; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-actions { display: flex; align-items: center; gap: 15px; }
+
+        .bottom-nav {
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--nav-bg); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); z-index: 2000;
+            padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -4px 15px rgba(0,0,0,0.05); justify-content: space-around;
+            transition: 0.3s;
+        }
+        .bot-nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); flex: 1; padding: 10px 0 8px; font-size: 0.75rem; gap: 4px; transition: 0.3s; }
+        .bot-nav-item i { font-size: 1.2rem; transition: 0.3s; }
+        .bot-nav-item.active { color: var(--primary); font-weight: 700; }
+        .bot-nav-item.active i { transform: translateY(-3px); }
+
+        /* ==========================================================
+           --- PREMIUM CENTERED HERO (NEW DESIGN) --- 
+           ========================================================== */
+        .hero { 
+            position: relative; padding: 160px 0 100px; text-align: center; 
+            background: var(--bg); overflow: hidden; transition: 0.3s; 
+        }
+        /* Soft glowing orb in the background */
+        .hero::before { 
+            content: ''; position: absolute; top: -20%; left: 50%; transform: translateX(-50%); 
+            width: 800px; height: 600px; background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(255,255,255,0) 70%); 
+            z-index: 0; pointer-events: none; border-radius: 50%;
+        }
+        body.dark-theme .hero::before { background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, rgba(15,23,42,0) 70%); }
+        
+        .hero .container { position: relative; z-index: 1; max-width: 900px; }
+        
+        /* Modern Pill Badge */
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; 
+            background: var(--card-bg); border: 1px solid var(--border-color); 
+            border-radius: 50px; font-weight: 600; font-size: 0.85rem; 
+            margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .hero-badge i { color: var(--accent); }
+        
+        /* Gradient Text Headline */
+        .hero h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1px; color: var(--text-main); }
+        .hero h1 span { 
+            background: linear-gradient(135deg, var(--primary), #a855f7); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+        }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); margin: 0 auto 40px; max-width: 650px; }
+        
+        /* Glassmorphism Stat Cards */
+        .hero-stats { display: flex; justify-content: center; gap: 20px; margin-top: 60px; flex-wrap: wrap; }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.4); border: 1px solid var(--border-color);
+            padding: 20px 30px; border-radius: 20px; box-shadow: var(--shadow);
+            min-width: 160px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+        body.dark-theme .stat-card { background: rgba(30, 41, 59, 0.4); }
+        .stat-card h4 { font-size: 2.2rem; color: var(--primary); font-weight: 800; margin-bottom: 5px; line-height: 1; }
+        .stat-card p { font-size: 0.85rem; color: var(--text-muted); margin: 0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* --- PREMIUM FEATURE CARDS --- */
+        .section-header { text-align: center; margin-bottom: 50px; padding: 0 20px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 12px; font-weight: 800; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 40px;}
+        
+        .feature-card {
+            background: var(--card-bg); padding: 40px 30px; border-radius: 24px; 
+            border: 1px solid var(--border-color); text-align: center; 
+            transition: 0.3s; position: relative; overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
+        .feature-icon {
+            width: 70px; height: 70px; margin: 0 auto 24px; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+        }
+        .icon-blue { background: rgba(99,102,241,0.1); color: var(--primary); }
+        .icon-green { background: rgba(16,185,129,0.1); color: var(--success); }
+        .icon-yellow { background: rgba(245,158,11,0.1); color: var(--accent); }
+        
+        /* Video/Map Cards */
+        .video-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border-color); transition: 0.3s; }
+        .video-card:active { transform: scale(0.98); } 
+        .video-thumb { position: relative; width: 100%; aspect-ratio: 16/9; }
+        .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; color: var(--primary); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; opacity: 0; transition: 0.3s; }
+        .video-card:hover .play-btn { opacity: 1; }
+        .video-body { padding: 24px; }
+        .video-body h3 { font-size: 1.1rem; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 3.2em; }
+
+        /* Note Cards */
+        .note-card { background: var(--card-bg); padding: 24px; border-radius: 20px; border: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: 0.3s; }
+        .note-card:active { transform: scale(0.98); }
+        .note-icon { width: 55px; height: 55px; background: #eff6ff; color: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+        body.dark-theme .note-icon { background: rgba(99, 102, 241, 0.15); }
+
+        .category-filter { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-btn { padding: 10px 24px; border-radius: 50px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .search-container input { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); }
+
+        /* --- SKELETON LOADERS --- */
+        .skeleton {
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear; border-radius: 8px;
+        }
+        body.dark-theme .skeleton { background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%); background-size: 200% 100%; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* --- MODALS --- */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0, 0.8); z-index: 2000; backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px; }
+        .viewer-container { width: 100%; max-width: 1100px; background: var(--card-bg); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; height: 90vh; }
+        .viewer-header { padding: 20px 30px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .viewer-body { flex-grow: 1; background: #000; }
+        .viewer-body iframe { width: 100%; height: 100%; border: none; }
+        .viewer-footer { padding: 20px; display: flex; justify-content: center; gap: 15px; border-top: 1px solid var(--border-color); }
+
+        .sub-modal { max-width: 450px; background: var(--card-bg); padding: 40px; border-radius: 30px; text-align: center; box-shadow: var(--shadow); width: 100%; border: 1px solid var(--border-color); }
+        .sub-modal i.fa-youtube { color: #ff0000; font-size: 4rem; margin-bottom: 20px; }
+
+        footer { background: #0f172a; color: #94a3b8; padding: 80px 0 40px; border-top: 1px solid #1e293b; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+        .footer-logo { color: white; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; }
+        .footer-links h4 { color: white; margin-bottom: 24px; }
+        .footer-links li { margin-bottom: 12px; }
+        .copyright { border-top: 1px solid #1e293b; padding-top: 30px; text-align: center; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } .top-sub-btn { display: none; } 
+            header nav { padding: 0 15px; } .bottom-nav { display: flex; } body { padding-bottom: 70px; } 
+            .hero { padding: 120px 0 60px; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero-stats { gap: 15px; }
+            .stat-card { min-width: 140px; padding: 15px 20px; }
+            .section-header h2 { font-size: 1.8rem; } .grid-3 { grid-template-columns: 1fr; gap: 20px; }
+            .viewer-container { height: 100vh; width: 100vw; max-width: 100vw; border-radius: 0; } #viewer-modal { padding: 0; }
+            .sub-modal { padding: 30px 20px; margin: 20px; } .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo" onclick="navigateTo('home')"><i class="fas fa-fire-alt"></i>BOARD TAPASYA</a>
+                <ul class="nav-links">
+                    <li><a href="#home" id="nav-home" class="active" onclick="navigateTo('home')">Home</a></li>
+                    <li><a href="#lectures" id="nav-lectures" onclick="navigateTo('lectures')">Video Lectures</a></li>
+                    <li><a href="#notes" id="nav-notes" onclick="navigateTo('notes')">Study Notes</a></li>
+                    <li><a href="#mindmaps" id="nav-mindmaps" onclick="navigateTo('mindmaps')">Mind Maps</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button id="theme-toggle" onclick="toggleTheme()" style="background:none; border:none; font-size:1.4rem; color:var(--text-main); cursor:pointer; padding:5px;"><i class="fas fa-moon"></i></button>
+                    <a href="https://youtube.com/@boardtapasya?sub_confirmation=1" target="_blank" class="btn btn-primary top-sub-btn">Subscribe <i class="fab fa-youtube"></i></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <nav class="bottom-nav">
+        <a href="#home" id="bot-nav-home" class="bot-nav-item active" onclick="navigateTo('home')"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#lectures" id="bot-nav-lectures" class="bot-nav-item" onclick="navigateTo('lectures')"><i class="fas fa-tv"></i><span>Lectures</span></a>
+        <a href="#notes" id="bot-nav-notes" class="bot-nav-item" onclick="navigateTo('notes')"><i class="fas fa-file-signature"></i><span>Notes</span></a>
+        <a href="#mindmaps" id="bot-nav-mindmaps" class="bot-nav-item" onclick="navigateTo('mindmaps')"><i class="fas fa-project-diagram"></i><span>Maps</span></a>
+    </nav>
+
+    <section id="page-home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-badge">
+                    <i class="fas fa-bolt"></i> Updated for 2024-25 Board Syllabus
+                </div>
+                <h1>Master Your Exams.<br><span>Unlock Your Potential.</span></h1>
+                <p>The ultimate learning destination for Board students. Master complex concepts with animated videos, perfectly structured notes, and expert guidance.</p>
+                <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" style="padding: 14px 32px; font-size: 1.05rem;" onclick="navigateTo('lectures')">Start Learning Now</button>
+                    <button class="btn btn-outline" style="padding: 14px 32px; font-size: 1.05rem;" onclick="navigateTo('notes')">Browse Notes</button>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <h4>20K+</h4>
+                        <p>Subscribers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>100%</h4>
+                        <p>Free Content</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>4.9/5</h4>
+                        <p>Student Rating</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container section-padding" style="padding-top: 60px; padding-bottom: 60px;">
+            <div class="section-header">
+                <h2>Why Board Tapasya?</h2>
+                <p>Designed specifically to help you score 90%+ in the State Board exams.</p>
+            </div>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <div class="feature-icon icon-blue"><i class="fas fa-tv"></i></div>
+                    <h3>Visual Learning</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">Animated videos that make complex Science & Maths concepts crystal clear and memorable.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-green"><i class="fas fa-file-signature"></i></div>
+                    <h3>Quality Notes</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">Concise, point-wise notes designed exactly how examiners want you to write your answers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon icon-yellow"><i class="fas fa-brain"></i></div>
+                    <h3>Smart Revision</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">One-page visual mind maps for rapid, last-minute revision during the exam season.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="page-lectures" class="page">
+        <div class="container">
+            <div class="section-header"><h2>Video Lectures</h2><p>Our latest animated sessions automatically updated from YouTube.</p></div>
+            <div class="search-container" style="text-align: center; margin-bottom: 40px;">
+                <div style="position: relative; max-width: 600px; margin: 0 auto;">
+                    <input type="text" id="lecture-search" placeholder="Search lectures..." onkeyup="filterLectures()" style="width: 100%; padding: 16px 20px 16px 50px; border-radius: 50px; font-family: inherit; font-size: 1rem; outline: none; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: 0.3s;">
+                    <i class="fas fa-search" style="position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem;"></i>
+                </div>
+            </div>
+            <div id="video-grid" class="grid-3"></div>
+        </div>
+    </section>
+
+    <section id="page-notes" class="page">
+        <div class="container">
+            <div class="section-header"><h2>Study Notes Repository</h2><p>Chapter-wise PDF notes directly synced from Google Drive.</p></div>
+            
+            <div class="search-container" style="text-align: center; margin-bottom: 30px;">
+                <div style="position: relative; max-width: 600px; margin: 0 auto;">
+                    <input type="text" id="note-search" placeholder="Search notes (e.g., Gravitation)..." onkeyup="applyNoteFilters()" style="width: 100%; padding: 16px 20px 16px 50px; border-radius: 50px; font-family: inherit; font-size: 1rem; outline: none; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: 0.3s;">
+                    <i class="fas fa-search" style="position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem;"></i>
+                </div>
+            </div>
+
+            <div class="category-filter" id="board-filter" style="margin-bottom: 15px;">
+                <button class="filter-btn active" onclick="setBoardFilter('all', this)">All Boards</button>
+                <button class="filter-btn" onclick="setBoardFilter('SSC', this)">SSC</button>
+                <button class="filter-btn" onclick="setBoardFilter('CBSE', this)">CBSE</button>
+                <button class="filter-btn" onclick="setBoardFilter('ICSE', this)">ICSE</button>
+            </div>
+            
+            <div class="category-filter" id="subject-filter" style="margin-bottom: 40px;">
+                <button class="filter-btn active" onclick="setSubjectFilter('all', this)">All Subjects</button>
+                <button class="filter-btn" onclick="setSubjectFilter('Science', this)">Science</button>
+                <button class="filter-btn" onclick="setSubjectFilter('Maths', this)">Mathematics</button>
+                <button class="filter-btn" onclick="setSubjectFilter('Computer', this)">Computer</button>
+                <button class="filter-btn" onclick="setSubjectFilter('English', this)">English</button>
+                <button class="filter-btn" onclick="setSubjectFilter('Marathi', this)">Marathi</button>
+                <button class="filter-btn" onclick="setSubjectFilter('Hindi', this)">Hindi</button>
+                <button class="filter-btn" onclick="setSubjectFilter('SST', this)">SST</button>
+            </div>
+
+            <div class="grid-3" id="notes-container"></div>
+        </div>
+    </section>
+
+    <section id="page-mindmaps" class="page">
+        <div class="container">
+            <div class="section-header"><h2>Visual Mind Maps</h2><p>High-quality images for rapid chapter revision synced from Google Drive.</p></div>
+            <div class="search-container" style="text-align: center; margin-bottom: 40px;">
+                <div style="position: relative; max-width: 600px; margin: 0 auto;">
+                    <input type="text" id="mindmap-search" placeholder="Search mind maps..." onkeyup="filterMindMaps()" style="width: 100%; padding: 16px 20px 16px 50px; border-radius: 50px; font-family: inherit; font-size: 1rem; outline: none; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: 0.3s;">
+                    <i class="fas fa-search" style="position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem;"></i>
+                </div>
+            </div>
+            <div class="grid-3" id="mindmaps-grid"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div><div class="footer-logo">BOARD TAPASYA</div><p>Dedicated educational platform helping students master the All Board curriculum.</p></div>
+                <div class="footer-links"><h4>Navigate</h4><ul><li><a href="#" onclick="navigateTo('home'); return false;">Home</a></li><li><a href="#" onclick="navigateTo('lectures'); return false;">Lectures</a></li><li><a href="#" onclick="navigateTo('notes'); return false;">Notes</a></li></ul></div>
+                <div class="footer-links"><h4>Support</h4><ul><li><a href="#">Contact Us</a></li><li><a href="#">Join Telegram</a></li></ul></div>
+            </div>
+            <div class="copyright">&copy; 2026 Board Tapasya. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <div id="sub-modal" class="modal-overlay">
+        <div class="sub-modal">
+            <i class="fab fa-youtube"></i>
+            <h2>Subscribe to Unlock</h2>
+            <p style="color: var(--text-muted); margin-top: 10px;">Please subscribe to <b>Board Tapasya</b> on YouTube to unlock these premium resources.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 25px;">
+                <a href="https://youtube.com/@boardtapasya?sub_confirmation=1" target="_blank" class="btn btn-primary" style="background: #ff0000; border: none;" onclick="setPendingSub(); triggerHaptic();">1. Subscribe Now</a>
+                <button class="btn btn-outline" onclick="verifySub(); triggerHaptic();">2. I have Subscribed</button>
+                <button onclick="closeModals()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 10px; margin-top: 5px;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="viewer-modal" class="modal-overlay">
+        <div class="viewer-container">
+            <div class="viewer-header">
+                <h3 id="v-title" style="font-size: 1.1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 80%;">Document Viewer</h3>
+                <button onclick="closeModals()" style="font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 5px;">&times;</button>
+            </div>
+            <div class="viewer-body"><iframe id="v-iframe" src=""></iframe></div>
+            <div class="viewer-footer">
+                <button class="btn btn-primary" id="v-download" style="flex: 1;">Download File</button>
+                <button class="btn btn-outline" onclick="closeModals()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // API CONFIGURATION 
+        // ==========================================
+        const YOUTUBE_API_KEY = 'AIzaSyD880R37LpcCc9wNfVyapsl4YzNz9hoYHY'; 
+        const CHANNEL_ID = 'UCiJUZ-yVFEpgiFJZ7S47klg'; 
+        
+        const DRIVE_API_KEY = 'AIzaSyAFt0eUQ0ReC-8mMVhShm0al7YIGpdaK1U'; 
+        
+        const NOTES_FOLDER_ID = '1poe-TgdFAsw1L7oICp51t8cKirNkYeb4'; 
+        const MAPS_FOLDER_ID = '1XWdRvzgnpEZ8MTnopBj_xtKAlC7P_VI9';
+
+
+        // ==========================================
+        // UI & NAVIGATION BEHAVIORS
+        // ==========================================
+        function triggerHaptic() { if (navigator.vibrate) navigator.vibrate(50); }
+
+        function toggleTheme() {
+            triggerHaptic();
+            const body = document.body;
+            const themeIcon = document.querySelector('#theme-toggle i');
+            const metaThemeColor = document.getElementById('meta-theme-color');
+            body.classList.toggle('dark-theme');
+            if (body.classList.contains('dark-theme')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                metaThemeColor.setAttribute('content', '#0f172a');
+                localStorage.setItem('bt_theme', 'dark');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                metaThemeColor.setAttribute('content', '#ffffff');
+                localStorage.setItem('bt_theme', 'light');
+            }
+        }
+        if (localStorage.getItem('bt_theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.querySelector('#theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+            document.getElementById('meta-theme-color').setAttribute('content', '#0f172a');
+        }
+
+        function navigateTo(pageId) {
+            triggerHaptic();
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.bot-nav-item').forEach(link => link.classList.remove('active'));
+            
+            const activeLink = document.getElementById('nav-' + pageId);
+            if(activeLink) activeLink.classList.add('active');
+            
+            const activeBotLink = document.getElementById('bot-nav-' + pageId);
+            if(activeBotLink) activeBotLink.classList.add('active');
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            
+            // Auto-fetch data when visiting the page
+            if(pageId === 'lectures') fetchVideos();
+            if(pageId === 'notes') fetchDriveNotes();
+            if(pageId === 'mindmaps') fetchDriveMaps();
+        }
+
+        // ==========================================
+        // MODAL & SUBSCRIPTION LOGIC
+        // ==========================================
+        let pendingFile = { id: '', title: '' };
+        let isSubscribed = localStorage.getItem('bt_verified') === 'true';
+
+        function handleAction(driveInput, title) {
+            triggerHaptic();
+            const extractId = (url) => { const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/); return match ? match[1] : url; };
+            pendingFile = { id: extractId(driveInput), title: title };
+            if (isSubscribed) openViewer();
+            else document.getElementById('sub-modal').style.display = 'flex';
+        }
+
+        function setPendingSub() { localStorage.setItem('bt_clicked_sub', 'true'); }
+
+        function verifySub() {
+            if (localStorage.getItem('bt_clicked_sub') === 'true') {
+                isSubscribed = true;
+                localStorage.setItem('bt_verified', 'true');
+                document.getElementById('sub-modal').style.display = 'none';
+                openViewer();
+            } else { alert("Please click Subscribe Now first!"); }
+        }
+
+        function openViewer() {
+            document.getElementById('v-title').innerText = pendingFile.title;
+            document.getElementById('v-iframe').src = `https://drive.google.com/file/d/${pendingFile.id}/preview`;
+            document.getElementById('v-download').onclick = () => { window.open(`https://drive.google.com/uc?export=download&id=${pendingFile.id}`, '_blank'); };
+            document.getElementById('viewer-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+            document.getElementById('v-iframe').src = "";
+            document.body.style.overflow = 'auto';
+        }
+
+        // ==========================================
+        // YOUTUBE LECTURES
+        // ==========================================
+        let videosLoaded = false;
+        let allFetchedVideos = []; 
+
+        function showSkeletons(containerId, count, isVideo) {
+            const container = document.getElementById(containerId);
+            let html = '';
+            for(let i=0; i<count; i++) {
+                if(isVideo) {
+                    html += `<div class="video-card" style="pointer-events: none; border: none; box-shadow: none;"><div class="video-thumb skeleton" style="border-radius: 20px 20px 0 0;"></div><div class="video-body"><div class="skeleton" style="height: 20px; width: 90%; margin-bottom: 12px;"></div><div class="skeleton" style="height: 20px; width: 60%;"></div></div></div>`;
+                } else {
+                    html += `<div class="note-card" style="pointer-events: none;"><div class="skeleton" style="width: 55px; height: 55px; border-radius: 12px;"></div><div style="flex-grow: 1;"><div class="skeleton" style="height: 15px; width: 40%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 25px; width: 80%; margin-bottom: 15px;"></div><div class="skeleton" style="height: 40px; width: 100%; border-radius: 12px;"></div></div></div>`;
+                }
+            }
+            container.innerHTML = html;
+        }
+
+        async function fetchVideos() {
+            if(videosLoaded) return;
+            showSkeletons('video-grid', 6, true); 
+            
+            try {
+                const searchResponse = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${CHANNEL_ID}&part=id&order=date&maxResults=20&type=video`);
+                const searchData = await searchResponse.json();
+                
+                if (searchData.items && searchData.items.length > 0) {
+                    const videoIds = searchData.items.map(item => item.id.videoId).join(',');
+                    const videoResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&id=${videoIds}&part=snippet,contentDetails`);
+                    const videoData = await videoResponse.json();
+                    
+                    allFetchedVideos = videoData.items
+                        .filter(video => {
+                            const duration = video.contentDetails.duration;
+                            return !(!duration.includes('H') && !duration.includes('M') || duration === 'PT1M'); 
+                        })
+                        .map(video => ({ id: { videoId: video.id }, snippet: video.snippet }));
+                    
+                    renderVideos(allFetchedVideos);
+                    videosLoaded = true;
+                }
+            } catch (e) { document.getElementById('video-grid').innerHTML = '<p style="grid-column: 1/-1; text-align: center;">Failed to load videos.</p>'; }
+        }
+
+        function renderVideos(videosToDisplay) {
+            const videoGrid = document.getElementById('video-grid');
+            videoGrid.innerHTML = videosToDisplay.length === 0 ? '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-weight: 500;">No lectures found.</p>' : '';
+            videosToDisplay.forEach(item => {
+                videoGrid.innerHTML += `
+                    <div class="video-card">
+                        <a href="https://www.youtube.com/watch?v=${item.id.videoId}" target="_blank">
+                            <div class="video-thumb"><img src="${item.snippet.thumbnails.high.url}" style="width:100%"><div class="play-btn"><i class="fas fa-play"></i></div></div>
+                            <div class="video-body"><h3>${item.snippet.title}</h3></div>
+                        </a>
+                    </div>`;
+            });
+        }
+
+        function filterLectures() {
+            const query = document.getElementById('lecture-search').value.toLowerCase();
+            renderVideos(allFetchedVideos.filter(v => v.snippet.title.toLowerCase().includes(query)));
+        }
+
+        // ==========================================
+        // GOOGLE DRIVE DYNAMIC FETCHING (NOTES & MAPS)
+        // ==========================================
+        let notesLoaded = false;
+        let mapsLoaded = false;
+
+        async function fetchDriveNotes() {
+            if(notesLoaded) return;
+            const container = document.getElementById('notes-container');
+            
+            showSkeletons('notes-container', 6, false);
+
+            try {
+                const res = await fetch(`https://www.googleapis.com/drive/v3/files?q='${NOTES_FOLDER_ID}'+in+parents+and+trashed=false&key=${DRIVE_API_KEY}&fields=files(id,name)`);
+                const data = await res.json();
+                
+                container.innerHTML = '';
+                if (data.files && data.files.length > 0) {
+                    data.files.forEach(file => {
+                        let board = "General";
+                        let subject = "General";
+                        let title = file.name.replace(/\.[^/.]+$/, ""); // Removes .pdf
+                        
+                        // NEW MAGIC: Splits "SSC - Science - Gravitation" into 3 parts
+                        if(title.includes('-')) {
+                            const parts = title.split('-');
+                            if(parts.length >= 3) {
+                                board = parts[0].trim();
+                                subject = parts[1].trim();
+                                title = parts.slice(2).join('-').trim();
+                            } else {
+                                subject = parts[0].trim();
+                                title = parts.slice(1).join('-').trim();
+                            }
+                        }
+
+                        // Auto-assign icons based on Subject name
+                        let icon = "fa-file-alt";
+                        if(subject.toLowerCase().includes('sci')) icon = "fa-flask";
+                        if(subject.toLowerCase().includes('math')) icon = "fa-calculator";
+                        if(subject.toLowerCase().includes('hist')) icon = "fa-monument";
+
+                        container.innerHTML += `
+                            <div class="note-card" data-board="${board}" data-subject="${subject}">
+                                <div class="note-icon"><i class="fas ${icon}"></i></div>
+                                <div style="flex-grow: 1;">
+                                    <span style="font-weight: 800; color: var(--primary); font-size: 0.7rem; text-transform: uppercase;">${board} | ${subject}</span>
+                                    <h4 style="margin: 5px 0;">${title}</h4>
+                                    <button class="btn btn-primary" style="width: 100%; margin-top: 15px; font-size: 0.85rem;" onclick="handleAction('${file.id}', '${title}')">View Notes</button>
+                                </div>
+                            </div>`;
+                    });
+                    notesLoaded = true;
+                } else {
+                    container.innerHTML = '<p style="text-align:center; grid-column:1/-1; color: var(--text-muted);">No notes found in this folder yet.</p>';
+                }
+            } catch(e) { container.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Error connecting to Server.</p>'; }
+        }
+
+        async function fetchDriveMaps() {
+            if(mapsLoaded) return;
+            const container = document.getElementById('mindmaps-grid');
+            
+            if(MAPS_FOLDER_ID === 'YOUR_MAPS_FOLDER_ID_HERE') {
+                container.innerHTML = '<div style="grid-column: 1/-1; background: #fff3cd; color: #856404; padding: 20px; border-radius: 10px; text-align: center;"><b>Admin:</b> Please replace YOUR_MAPS_FOLDER_ID_HERE with your actual Drive Folder ID in the code!</div>';
+                return;
+            }
+
+            showSkeletons('mindmaps-grid', 3, true);
+
+            try {
+                const res = await fetch(`https://www.googleapis.com/drive/v3/files?q='${MAPS_FOLDER_ID}'+in+parents+and+trashed=false&key=${DRIVE_API_KEY}&fields=files(id,name,thumbnailLink)`);
+                const data = await res.json();
+                
+                container.innerHTML = '';
+                if (data.files && data.files.length > 0) {
+                    data.files.forEach(file => {
+                        let title = file.name.replace(/\.[^/.]+$/, ""); // Removes .png or .jpg
+                        let thumbUrl = file.thumbnailLink ? file.thumbnailLink.replace('=s220', '=s600') : 'https://images.unsplash.com/photo-1544391496-1ca7c9765770?auto=format&fit=crop&q=80&w=400';
+
+                        container.innerHTML += `
+                            <div class="video-card mindmap-card">
+                                <div class="video-thumb"><img src="${thumbUrl}" alt="${title}"></div>
+                                <div class="video-body">
+                                    <h3>${title}</h3>
+                                    <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="handleAction('${file.id}', '${title}')">View Full Image</button>
+                                </div>
+                            </div>`;
+                    });
+                    mapsLoaded = true;
+                } else {
+                    container.innerHTML = '<p style="text-align:center; grid-column:1/-1; color: var(--text-muted);">No mind maps found in this folder yet.</p>';
+                }
+            } catch(e) { container.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Error connecting to Server.</p>'; }
+        }
+
+        // ==========================================
+        // DUAL-FILTER SYSTEM (BOARD + SUBJECT + SEARCH)
+        // ==========================================
+        let currentBoard = 'all';
+        let currentSubject = 'all';
+
+        function setBoardFilter(board, btn) {
+            triggerHaptic();
+            document.querySelectorAll('#board-filter .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentBoard = board;
+            applyNoteFilters();
+        }
+
+        function setSubjectFilter(subject, btn) {
+            triggerHaptic();
+            document.querySelectorAll('#subject-filter .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentSubject = subject;
+            applyNoteFilters();
+        }
+
+        function applyNoteFilters() {
+            const query = document.getElementById('note-search').value.toLowerCase();
+            
+            // FIX 1: Only select note cards inside the notes container (ignores the Home page cards)
+            document.querySelectorAll('#notes-container .note-card').forEach(card => {
+                const b = (card.dataset.board || '').toLowerCase();
+                const s = (card.dataset.subject || '').toLowerCase();
+                
+                // FIX 2: Safety check to make sure the h4 actually exists before reading it
+                const titleElement = card.querySelector('h4');
+                const title = titleElement ? titleElement.innerText.toLowerCase() : '';
+                
+                const boardMatch = (currentBoard === 'all' || b === currentBoard.toLowerCase());
+                const subjectMatch = (currentSubject === 'all' || s === currentSubject.toLowerCase());
+                const searchMatch = title.includes(query);
+                
+                if(boardMatch && subjectMatch && searchMatch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterMindMaps() {
+            const query = document.getElementById('mindmap-search').value.toLowerCase();
+            document.querySelectorAll('.mindmap-card').forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                card.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        // AUTO-OPEN NOTE FROM URL
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const noteId = urlParams.get('note');
+            const noteTitle = urlParams.get('title') || 'Study Material';
+
+            if (noteId) {
+                navigateTo('notes');
+                setTimeout(() => handleAction(noteId, noteTitle), 500);
+            }
+        });
+    </script>
+</body>
+</html>

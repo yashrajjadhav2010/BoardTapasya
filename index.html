@@ -248,6 +248,7 @@
                     <li><a href="#lectures" id="nav-lectures" onclick="navigateTo('lectures')">Video Lectures</a></li>
                     <li><a href="#notes" id="nav-notes" onclick="navigateTo('notes')">Study Notes</a></li>
                     <li><a href="#mindmaps" id="nav-mindmaps" onclick="navigateTo('mindmaps')">Mind Maps</a></li>
+                    <li><a href="#about" id="nav-about" onclick="navigateTo('about')">About Us</a></li>
                 </ul>
                 <div class="nav-actions">
                     <button id="theme-toggle" onclick="toggleTheme()" style="background:none; border:none; font-size:1.4rem; color:var(--text-main); cursor:pointer; padding:5px;"><i class="fas fa-moon"></i></button>
@@ -262,6 +263,7 @@
         <a href="#lectures" id="bot-nav-lectures" class="bot-nav-item" onclick="navigateTo('lectures')"><i class="fas fa-tv"></i><span>Lectures</span></a>
         <a href="#notes" id="bot-nav-notes" class="bot-nav-item" onclick="navigateTo('notes')"><i class="fas fa-file-signature"></i><span>Notes</span></a>
         <a href="#mindmaps" id="bot-nav-mindmaps" class="bot-nav-item" onclick="navigateTo('mindmaps')"><i class="fas fa-project-diagram"></i><span>Maps</span></a>
+        <li><a href="#about" onclick="navigateTo('about'); return false;">About Us</a></li>
     </nav>
 
     <section id="page-home" class="page active">
@@ -420,13 +422,56 @@
         </div>
     </section>
 
+
+    <section id="page-about" class="page">
+        <div class="container section-padding" style="max-width: 800px; padding-top: 60px; padding-bottom: 60px;">
+            <div class="section-header">
+                <h2>About Us</h2>
+                <p>The story behind Board Tapasya</p>
+            </div>
+            <div style="background: var(--card-bg); padding: 50px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow); text-align: center;">
+                <div style="width: 80px; height: 80px; background: rgba(99,102,241,0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 20px;">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 style="margin-bottom: 15px; font-size: 1.8rem;">Our Mission</h3>
+                <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem; line-height: 1.8;">
+                    Board Tapasya was created with a single vision: to make high-quality board exam preparation accessible to every student for free. We believe that top-tier education shouldn't be locked behind expensive paywalls.
+                </p>
+                
+                <h3 style="margin-bottom: 15px; font-size: 1.8rem;">Who We Are</h3>
+                <p style="color: var(--text-muted); margin-bottom: 0; font-size: 1.1rem; line-height: 1.8;">
+                    Founded by Ashraj Yadav, a fellow student who understands the exact challenges and pressures of board exams. We combine visual learning, point-wise notes, and smart revision maps to help you score 90%+ with confidence. Welcome to your ultimate study hub!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="page-contact" class="page">
+        <div class="container section-padding" style="max-width: 800px; padding-top: 60px; padding-bottom: 60px;">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you!</p>
+            </div>
+            <div style="background: var(--card-bg); padding: 50px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow); text-align: center;">
+                <i class="fas fa-envelope-open-text" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 25px;"></i>
+                <h3 style="margin-bottom: 15px; font-size: 1.8rem;">Get in Touch</h3>
+                <p style="color: var(--text-muted); margin-bottom: 35px; font-size: 1.1rem;">For any business inquiries, suggestions, or support regarding our study materials, please reach out to us directly.</p>
+                
+                <a href="mailto:contact.bhaktilines@gmail.com" class="btn btn-primary" style="font-size: 1.1rem; padding: 15px 35px;">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+                <p style="margin-top: 20px; color: var(--text-muted); font-weight: 600;">contact.bhaktilines@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div><div class="footer-logo">BOARD TAPASYA</div><p>Dedicated educational platform helping students master the All Board curriculum.</p></div>
                 <div class="footer-links"><h4>Navigate</h4><ul><li><a href="#" onclick="navigateTo('home'); return false;">Home</a></li><li><a href="#" onclick="navigateTo('lectures'); return false;">Lectures</a></li><li><a href="#" onclick="navigateTo('notes'); return false;">Notes</a></li></ul></div>
                 <li><a href="#privacy" onclick="navigateTo('privacy'); return false;">Privacy Policy</a></li>
-                <div class="footer-links"><h4>Support</h4><ul><li><a href="#">Contact Us</a></li><li><a href="https://youtube.com/@boardtapasya?sub_confirmation=1" target="_blank">Join YouTube</a></li></ul></div>
+                <div class="footer-links"><h4>Support</h4><ul><li><a href="#contact" onclick="navigateTo('contact'); return false;">Contact Us</a></li><li><a href="https://youtube.com/@boardtapasya?sub_confirmation=1" target="_blank">Join YouTube</a></li></ul></div>
             </div>
             <div class="copyright">&copy; 2026 Board Tapasya. All Rights Reserved.</div>
         </div>

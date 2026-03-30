@@ -235,6 +235,103 @@
             .viewer-container { height: 100vh; width: 100vw; max-width: 100vw; border-radius: 0; } #viewer-modal { padding: 0; }
             .sub-modal { padding: 30px 20px; margin: 20px; } .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
         }
+        /* Visibility Utilities */
+        .desktop-only { display: block; }
+        .mobile-only { display: none; }
+
+        @media (max-width: 768px) {
+            .desktop-only { display: none; }
+            .mobile-only { display: block; }
+        }
+
+        /* --- ADSTERRA AD FRAMES --- */
+        .ad-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 100%;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+            position: relative;
+        }
+        body.dark-theme .ad-container { background: rgba(255, 255, 255, 0.02); }
+        
+        .ad-container::before {
+            content: 'ADVERTISEMENT';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            opacity: 0.5;
+            letter-spacing: 2px;
+        }
+
+        /* Top Banner (728x90 desktop, 320x50 mobile) */
+        .ad-banner-top {
+            width: 728px;
+            height: 90px;
+            max-width: 95%;
+        }
+
+        /* Sticky Bottom Ad (Mobile Only) */
+        .ad-sticky-bottom {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 50px;
+            z-index: 2500;
+            margin: 0;
+            background: var(--card-bg);
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            border-top: 1px solid var(--border-color);
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* In-content Responsive Ad */
+        .ad-native-content {
+            width: 100%;
+            min-height: 100px;
+            max-width: 1100px;
+        }
+
+        @media (max-width: 768px) {
+            .ad-banner-top {
+                width: 320px;
+                height: 50px;
+            }
+            .ad-sticky-bottom {
+                display: flex;
+                bottom: 75px; /* Positioned above the bottom navigation */
+                border-radius: 10px;
+                width: 95%;
+            }
+            body { padding-bottom: 120px !important; } /* Extra space for sticky ad + bottom nav */
+        }
+
+        /* --- ADSTERRA SOCIAL BAR FIX --- */
+        /* Forces the Social Bar to the bottom-right to avoid overlapping the top nav/branding */
+        div[id^="at-cv-"], 
+        div[class*="as-container"],
+        body > div[style*="fixed"][style*="z-index"] {
+            top: auto !important;
+            bottom: 80px !important; /* Positioned above the bottom navigation on mobile */
+        }
+        @media (min-width: 769px) {
+            div[id^="at-cv-"], 
+            div[class*="as-container"],
+            body > div[style*="fixed"][style*="z-index"] {
+                bottom: 20px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -258,15 +355,45 @@
         </div>
     </header>
 
+    <!-- GLOBAL TOP AD BANNER (Visible on all sections) -->
+    <div class="desktop-only" style="padding-top: 100px; background: var(--bg); text-align: center;">
+        <div class="ad-container ad-banner-top" style="margin-bottom: 20px;">
+            <script>
+                atOptions = {
+                    'key' : '49ff9d9d68eb4ab33087f04aa0f4e9fd',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highperformanceformat.com/49ff9d9d68eb4ab33087f04aa0f4e9fd/invoke.js"></script>
+        </div>
+    </div>
+    <div class="mobile-only" style="padding-top: 90px; background: var(--bg); text-align: center;">
+        <div class="ad-container ad-banner-top" style="margin-bottom: 10px;">
+            <script>
+                atOptions = {
+                    'key' : '4b6a4f705bdf8c759c3cb998d793378f',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highperformanceformat.com/4b6a4f705bdf8c759c3cb998d793378f/invoke.js"></script>
+        </div>
+    </div>
+
     <nav class="bottom-nav">
         <a href="#home" id="bot-nav-home" class="bot-nav-item active" onclick="navigateTo('home')"><i class="fas fa-home"></i><span>Home</span></a>
         <a href="#lectures" id="bot-nav-lectures" class="bot-nav-item" onclick="navigateTo('lectures')"><i class="fas fa-tv"></i><span>Lectures</span></a>
         <a href="#notes" id="bot-nav-notes" class="bot-nav-item" onclick="navigateTo('notes')"><i class="fas fa-file-signature"></i><span>Notes</span></a>
         <a href="#mindmaps" id="bot-nav-mindmaps" class="bot-nav-item" onclick="navigateTo('mindmaps')"><i class="fas fa-project-diagram"></i><span>Maps</span></a>
-        <li><a href="#about" onclick="navigateTo('about'); return false;">About Us</a></li>
+        <a href="#about" id="bot-nav-about" class="bot-nav-item" onclick="navigateTo('about')"><i class="fas fa-info-circle"></i><span>About Us</span></a>
     </nav>
 
-    <section id="page-home" class="page active">
+    <section id="page-home" class="page active" style="padding-top: 20px;">
         <div class="hero">
             <div class="container">
                 <div class="hero-badge">
@@ -281,7 +408,7 @@
                 
                 <div class="hero-stats">
                     <div class="stat-card">
-                        <h4>20+</h4>
+                        <h4 id="sub-count-display">20+</h4>
                         <p>Subscribers</p>
                     </div>
                     <div class="stat-card">
@@ -318,12 +445,18 @@
                     <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 10px;">One-page visual mind maps for rapid, last-minute revision during the exam season.</p>
                 </div>
             </div>
+            </div>
         </div>
+        
+        <div class="container section-padding" style="padding-top: 60px; padding-bottom: 60px;">
     </section>
 
     <section id="page-lectures" class="page">
         <div class="container">
-            <div class="section-header"><h2>Video Lectures</h2><p>Our latest animated sessions automatically updated from YouTube.</p></div>
+            <div class="section-header">
+                <h2>Video Lectures</h2>
+                <p>Our latest animated sessions automatically updated from YouTube.</p>
+            </div>
             <div class="search-container" style="text-align: center; margin-bottom: 40px;">
                 <div style="position: relative; max-width: 600px; margin: 0 auto;">
                     <input type="text" id="lecture-search" placeholder="Search lectures..." onkeyup="filterLectures()" style="width: 100%; padding: 16px 20px 16px 50px; border-radius: 50px; font-family: inherit; font-size: 1rem; outline: none; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: 0.3s;">
@@ -336,7 +469,10 @@
 
     <section id="page-notes" class="page">
         <div class="container">
-            <div class="section-header"><h2>Study Notes Repository</h2><p>Chapter-wise PDF notes directly synced from Google Drive.</p></div>
+            <div class="section-header">
+                <h2>Study Notes Repository</h2>
+                <p>Chapter-wise PDF notes directly synced from Google Drive.</p>
+            </div>
             
             <div class="search-container" style="text-align: center; margin-bottom: 30px;">
                 <div style="position: relative; max-width: 600px; margin: 0 auto;">
@@ -391,14 +527,25 @@
                 <h3 style="margin-top: 0; margin-bottom: 10px;">1. Introduction</h3>
                 <p style="color: var(--text-muted); margin-bottom: 25px;">Welcome to Board Tapasya. We respect your privacy and are committed to protecting your personal data while you use our educational platform.</p>
                 
-                <h3 style="margin-bottom: 10px;">2. Google AdSense & Cookies</h3>
-                <p style="color: var(--text-muted); margin-bottom: 25px;">We use Google AdSense to display advertisements. Google, as a third-party vendor, uses cookies to serve ads based on your prior visits to our website. You can opt out of personalized advertising by visiting Google's Ads Settings.</p>
+                <h3 style="margin-bottom: 10px;">2. Advertising Partners & Cookies</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">We use <b>Google AdSense</b> and <b>Adsterra</b> to display advertisements. These third-party vendors use cookies to serve ads based on your prior visits to our website. You can opt out of personalized advertising by visiting their respective settings or using an ad-blocking extension.</p>
                 
                 <h3 style="margin-bottom: 10px;">3. Third-Party Services</h3>
-                <p style="color: var(--text-muted); margin-bottom: 25px;">Our website utilizes third-party services such as Google Drive (for PDF notes) and YouTube (for video lectures). These services have their own privacy policies, and we do not hold responsibility for their data collection practices.</p>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Our website utilizes third-party services such as <b>Google Drive</b> (for PDF notes), <b>YouTube</b> (for video lectures), and <b>Adsterra Network</b>. These services have their own independent privacy policies, and we do not hold responsibility for their data collection practices or the content of the ads served.</p>
 
                 <h3 style="margin-bottom: 10px;">4. Information Collection</h3>
-                <p style="color: var(--text-muted); margin-bottom: 0;">We do not collect personal identification information unless voluntarily submitted. We may collect non-personal identification information such as browser type and technical connection details to improve user experience.</p>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">We do not collect personal identification information unless voluntarily submitted. We may collect non-personal identification information such as browser type and technical connection details to improve user experience.</p>
+
+                <h2 style="font-size: 2rem; margin-top: 40px; margin-bottom: 20px; border-top: 1px solid var(--border-color); padding-top: 30px;">Terms of Service</h2>
+                
+                <h3 style="margin-bottom: 10px;">1. Acceptance of Terms</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">By accessing Board Tapasya, you agree to comply with these terms. The content provided is for educational purposes only.</p>
+                
+                <h3 style="margin-bottom: 10px;">2. Intellectual Property</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">All study materials, notes, and mind maps are the intellectual property of Board Tapasya. You may use them for personal study but may not redistribute them for commercial purposes without permission.</p>
+                
+                <h3 style="margin-bottom: 10px;">3. Disclaimer</h3>
+                <p style="color: var(--text-muted); margin-bottom: 0;">While we strive for 100% accuracy, Board Tapasya is not responsible for any errors in the educational content or for any performance outcomes in exams.</p>
             </div>
         </div>
     </section>
@@ -460,10 +607,18 @@
                 <a href="mailto:contact.bhaktilines@gmail.com" class="btn btn-primary" style="font-size: 1.1rem; padding: 15px 35px;">
                     <i class="fas fa-envelope"></i> Email Us
                 </a>
-                <p style="margin-top: 20px; color: var(--text-muted); font-weight: 600;">boardtapasya@gmail.com</p>
+                <p style="margin-top: 20px; color: var(--text-muted); font-weight: 600;">contact.bhaktilines@gmail.com</p>
             </div>
         </div>
     </section>
+
+    <!-- GLOBAL NATIVE AD (Visible at the bottom of all sections) -->
+    <div class="container section-padding" style="padding-top: 20px; padding-bottom: 20px;">
+        <div class="ad-container ad-native-content">
+            <script async="async" data-cfasync="false" src="https://pl29013461.profitablecpmratenetwork.com/4b1ee18fcd0da03cea8155962ef5f352/invoke.js"></script>
+            <div id="container-4b1ee18fcd0da03cea8155962ef5f352"></div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -504,6 +659,10 @@
         </div>
     </div>
 
+    </div>
+        <!-- PASTE ADSTERRA 320x50 MOBILE AD SCRIPT HERE -->
+    </div>
+
     <script>
         // ==========================================
         // API CONFIGURATION 
@@ -515,6 +674,30 @@
         
         const NOTES_FOLDER_ID = '1poe-TgdFAsw1L7oICp51t8cKirNkYeb4'; 
         const MAPS_FOLDER_ID = '1XWdRvzgnpEZ8MTnopBj_xtKAlC7P_VI9';
+
+
+        // ==========================================
+        // YOUTUBE LIVE STATS
+        // ==========================================
+        async function fetchChannelStats() {
+            try {
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${YOUTUBE_API_KEY}`);
+                const data = await response.json();
+                
+                if (data.items && data.items.length > 0) {
+                    const count = parseInt(data.items[0].statistics.subscriberCount);
+                    let displayCount = count;
+                    
+                    if (count >= 1000000) {
+                        displayCount = (count / 1000000).toFixed(1) + 'M';
+                    } else if (count >= 1000) {
+                        displayCount = (count / 1000).toFixed(1) + 'K';
+                    }
+                    
+                    document.getElementById('sub-count-display').innerText = displayCount + '+';
+                }
+            } catch (e) { console.error("Error fetching subscribers:", e); }
+        }
 
 
         // ==========================================
@@ -829,8 +1012,27 @@
                 navigateTo('notes');
                 setTimeout(() => handleAction(noteId, noteTitle), 500);
             }
+            
+            // Fetch live stats on load
+            fetchChannelStats();
         });
     </script>
-</body>
+    <!-- STICKY MOBILE AD -->
+    <div class="ad-container ad-sticky-bottom">
+        <script>
+            atOptions = {
+                'key' : '4b6a4f705bdf8c759c3cb998d793378f',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script src="https://www.highperformanceformat.com/4b6a4f705bdf8c759c3cb998d793378f/invoke.js"></script>
+    </div>
 
+    <!-- ADSTERRA SOCIAL BAR -->
+    <script src="https://pl29013462.profitablecpmratenetwork.com/97/63/a6/9763a6494065e4c5d4826d7246db35da.js"></script>
+
+</body>
 </html>
